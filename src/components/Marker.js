@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { camelize } from '../lib/String'
+import {
+  camelize
+} from '../lib/String'
 
 const evtNames = [
   'click',
@@ -14,17 +16,17 @@ const evtNames = [
   'recenter',
 ];
 
-const wrappedPromise = function() {
-    var wrappedPromise = {},
-        promise = new Promise(function (resolve, reject) {
-            wrappedPromise.resolve = resolve;
-            wrappedPromise.reject = reject;
-        });
-    wrappedPromise.then = promise.then.bind(promise);
-    wrappedPromise.catch = promise.catch.bind(promise);
-    wrappedPromise.promise = promise;
+const wrappedPromise = function () {
+  var wrappedPromise = {},
+    promise = new Promise(function (resolve, reject) {
+      wrappedPromise.resolve = resolve;
+      wrappedPromise.reject = reject;
+    });
+  wrappedPromise.then = promise.then.bind(promise);
+  wrappedPromise.catch = promise.catch.bind(promise);
+  wrappedPromise.promise = promise;
 
-    return wrappedPromise;
+  return wrappedPromise;
 }
 
 export class Marker extends React.Component {
@@ -36,12 +38,14 @@ export class Marker extends React.Component {
 
   componentDidUpdate(prevProps) {
     if ((this.props.map !== prevProps.map) ||
-      (this.props.position !== prevProps.position) ||
+      ((this.props.position && prevProps.position) ?
+        this.props.position.lat !== prevProps.position.lat || this.props.position.lng !== prevProps.position.lng :
+        this.props.position !== prevProps.position) ||
       (this.props.icon !== prevProps.icon)) {
-        if (this.marker) {
-            this.marker.setMap(null);
-        }
-        this.renderMarker();
+      if (this.marker) {
+        this.marker.setMap(null);
+      }
+      this.renderMarker();
     }
   }
 
