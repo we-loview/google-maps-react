@@ -25,7 +25,7 @@ export class InfoWindow extends React.Component {
     }
 
     if (this.props.children !== prevProps.children) {
-      this.updateContent();
+      this.updateContent(prevProps);
     }
 
     if ((this.props.visible !== prevProps.visible ||
@@ -84,17 +84,18 @@ export class InfoWindow extends React.Component {
     this.infowindow.setPosition(pos);
   }
 
-  updateContent() {
-    const content = this.renderChildren();
-    this.infowindow.setContent(content);
+  updateContent(prevProps) {
+    const content = this.renderChildren(this.props);
+    const contentOld = this.renderChildren(prevProps);
+    content !== contentOld && this.infowindow.setContent(content);
   }
 
   closeWindow() {
     this.infowindow.close();
   }
 
-  renderChildren() {
-    const {children} = this.props;
+  renderChildren(props) {
+    const {children} = props;
     return ReactDOMServer.renderToString(children);
   }
 

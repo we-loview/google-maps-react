@@ -141,7 +141,7 @@
         }
 
         if (this.props.children !== prevProps.children) {
-          this.updateContent();
+          this.updateContent(prevProps);
         }
 
         if (this.props.visible !== prevProps.visible || this.props.marker !== prevProps.marker || this.props.position !== prevProps.position) {
@@ -198,9 +198,10 @@
       }
     }, {
       key: 'updateContent',
-      value: function updateContent() {
-        var content = this.renderChildren();
-        this.infowindow.setContent(content);
+      value: function updateContent(prevProps) {
+        var content = this.renderChildren(this.props);
+        var contentOld = this.renderChildren(prevProps);
+        content !== contentOld && this.infowindow.setContent(content);
       }
     }, {
       key: 'closeWindow',
@@ -209,8 +210,8 @@
       }
     }, {
       key: 'renderChildren',
-      value: function renderChildren() {
-        var children = this.props.children;
+      value: function renderChildren(props) {
+        var children = props.children;
 
         return _server2.default.renderToString(children);
       }
