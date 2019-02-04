@@ -144,9 +144,7 @@
           this.updateContent();
         }
 
-        if (this.props.visible !== prevProps.visible || this.props.marker !== prevProps.marker || (this.props.position && prevProps.position ? this.props.position.lat !== prevProps.position.lat || this.props.position.lng !== prevProps.position.lng : this.props.position !== prevProps.position)) {
-          console.log('essig');
-
+        if (this.props.visible !== prevProps.visible || this.props.marker !== prevProps.marker || this.props.position !== prevProps.position) {
           this.props.visible ? this.openWindow() : this.closeWindow();
         }
       }
